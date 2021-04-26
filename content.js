@@ -1,13 +1,15 @@
 
+var uploadButton = document.createElement("BUTTON");
+var innerText = document.createTextNode("Upload Resume");
+
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         if (request.message === "clicked_browser_action") {
-            var x = document.createElement("BUTTON");
-            var t = document.createTextNode("Upload Resume");
-            x.appendChild(t);
-            document.body.appendChild(x);
-
+            uploadButton.appendChild(innerText);
+            document.getElementsByClassName("ha")[0].appendChild(uploadButton);
+            uploadButton.onclick = function () {
+                console.log("Do work here");
+            };
         }
     }
 );
-
