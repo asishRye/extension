@@ -1,6 +1,26 @@
 
 var uploadButton = document.createElement("BUTTON");
 var innerText = document.createTextNode("Upload Resume");
+var divElement = document.createElement("div");
+var innerCode = `<ul                                style="list-style-type: none;
+                                                    -moz-column-count: 5;
+                                                    -moz-column-gap: 5px;
+                                                    -webkit-column-count: 4;
+                                                    -webkit-column-gap: 5px;
+                                                    column-count: 5;
+                                                    column-gap: 5px;
+                                                    font-family: Arial, Helvetica, sans-serif;       
+                                                    font-size: 15px;"
+                    >
+                    <li><input type="checkbox" />Node </li>
+                    <li><input type="checkbox" />Go Lang</li>
+                    <li><input type="checkbox" />HR </li>
+                    <li><input type="checkbox" />Web Dev </li>
+                    <li><input type="checkbox" />Flutter </li>
+                    <li><input type="checkbox" />Ai </li>
+                </ul>`;
+divElement.innerHTML = divElement.innerHTML + innerCode;
+
 uploadButtonStyle = `border-radius: 4px;
                     border-width: 0px;
                     height: 30px;
@@ -19,20 +39,28 @@ uploadButtonFailedStyle = `border-radius: 4px;
                             background-color: red;
                             color: white;
                             `;
+divBlockStyle = `max-height: 35px;
+                max-width:500px`;
+
+function addElements() {
+    uploadButton.appendChild(innerText);
+    document.getElementsByClassName("ha")[0].appendChild(uploadButton);
+    document.getElementsByClassName("ha")[0].appendChild(divElement);
+    divElement.setAttribute("style", divBlockStyle);
+    uploadButton.setAttribute("style", uploadButtonStyle);
+    uploadButton.onclick = function () {
+        uploadButton.setAttribute("style", uploadButtonClickedStyle);
+        uploadButton.innerHTML = "Uploading";
+        setTimeout(processFuntion, 2000);
+        console.log("Do work here");
+    };
+}
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         if (request.message === "clicked_browser_action") {
             try {
-                uploadButton.appendChild(innerText);
-                document.getElementsByClassName("ha")[0].appendChild(uploadButton);
-                uploadButton.setAttribute("style", uploadButtonStyle);
-                uploadButton.onclick = function () {
-                    uploadButton.setAttribute("style", uploadButtonClickedStyle);
-                    uploadButton.innerHTML = "Uploading";
-                    setTimeout(processFuntion, 2000);
-                    console.log("Do work here");
-                };
+                addElements();
             }
             catch {
                 console.log("Something bad happened :(");
